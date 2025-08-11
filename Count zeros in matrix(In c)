@@ -1,0 +1,54 @@
+#include <stdio.h>
+
+#define N 4 // Define the size of the matrix
+
+// The function to be implemented (as per GFG)
+int countZeros(int size, int A[size][size]) {
+    int totalZeros = 0;
+
+    // Iterate over each row
+    for (int i = 0; i < size; i++) {
+        // Binary Search to find the first zero in the current row A[i]
+        int low = 0;
+        int high = size - 1;
+        int firstZeroIndex = size; // Assume no zeros initially
+
+        while (low <= high) {
+            int mid = low + (high - low) / 2;
+
+            if (A[i][mid] == 0) {
+                firstZeroIndex = mid;
+                high = mid - 1; 
+            } else { // A[i][mid] == 1
+                low = mid + 1;
+            }
+        }
+        
+        totalZeros += (size - firstZeroIndex);
+    }
+
+    return totalZeros;
+}
+
+// Driver code
+int main() {
+    int matrix[N][N] = {
+        {1, 1, 1, 0},
+        {1, 1, 0, 0},
+        {1, 0, 0, 0},
+        {1, 1, 1, 1}
+    };
+
+    printf("The matrix is:\n");
+    for (int i = 0; i < N; i++) {
+        for (int j = 0; j < N; j++) {
+            printf("%d ", matrix[i][j]);
+        }
+        printf("\n");
+    }
+
+    int zeroCount = countZeros(N, matrix);
+    printf("\nTotal number of zeros: %d\n", zeroCount); // Expected output: 6
+
+    return 0;
+}
