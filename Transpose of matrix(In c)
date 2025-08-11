@@ -1,0 +1,64 @@
+#include <stdio.h>
+
+#define MAX_ROWS 10
+#define MAX_COLS 10
+
+// Function to read elements into a matrix
+void readMatrix(int matrix[][MAX_COLS], int rows, int cols) {
+    printf("Enter the elements of the matrix:\n");
+    for (int i = 0; i < rows; i++) {
+        for (int j = 0; j < cols; j++) {
+            scanf("%d", &matrix[i][j]);
+        }
+    }
+}
+
+// Function to print the elements of a matrix
+void printMatrix(int matrix[][MAX_COLS], int rows, int cols) {
+    for (int i = 0; i < rows; i++) {
+        for (int j = 0; j < cols; j++) {
+            printf("%d\t", matrix[i][j]);
+        }
+        printf("\n");
+    }
+}
+
+int main() {
+    int matrix[MAX_ROWS][MAX_COLS];
+    int transpose[MAX_COLS][MAX_ROWS]; // Note the swapped dimensions
+    int rows, cols;
+
+    // Get matrix dimensions from the user
+    printf("Enter the number of rows (1-%d): ", MAX_ROWS);
+    scanf("%d", &rows);
+    printf("Enter the number of columns (1-%d): ", MAX_COLS);
+    scanf("%d", &cols);
+
+    // Validate dimensions
+    if (rows <= 0 || rows > MAX_ROWS || cols <= 0 || cols > MAX_COLS) {
+        printf("Invalid dimensions.\n");
+        return 1;
+    }
+
+    // Read the matrix from the user
+    readMatrix(matrix, rows, cols);
+
+    // Display the original matrix
+    printf("\nOriginal Matrix:\n");
+    printMatrix(matrix, rows, cols);
+
+    // --- Core Transpose Logic ---
+    for (int i = 0; i < rows; i++) {
+        for (int j = 0; j < cols; j++) {
+            transpose[j][i] = matrix[i][j];
+        }
+    }
+    // --------------------------
+
+    // Display the transposed matrix
+    printf("\nTransposed Matrix:\n");
+    // Note how we pass cols then rows for printing the transpose
+    printMatrix(transpose, cols, rows);
+
+    return 0;
+}
